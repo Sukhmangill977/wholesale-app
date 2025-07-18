@@ -1,0 +1,37 @@
+/* src/pages/ProductDetail.css */
+
+.product-detail-container {
+  padding: 2rem;
+  background: #f0f2f5;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  min-height: 100vh;
+}
+
+.detail-image {
+  width: 300px;
+  height: auto;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+}
+
+.product-detail-info {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.product-detail-info p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.product-detail-info strong {
+  color: #2c3e50;
+}
