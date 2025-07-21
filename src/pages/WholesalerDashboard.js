@@ -19,8 +19,8 @@ function WholesalerDashboard() {
     price: '',
     minOrderQty: '',
     brand: '',
-    SKU: '',
-    expiryDate: ''
+    contact : '',
+    address: ''
   });
   const [image, setImage] = useState(null);
   const [editId, setEditId] = useState(null);
@@ -66,7 +66,7 @@ function WholesalerDashboard() {
     setFormData({
       name: '', description: '', weight: '', dimensions: '',
       type: '', quantityAvailable: '', unit: '', price: '',
-      minOrderQty: '', brand: '', SKU: '', expiryDate: ''
+      minOrderQty: '', brand: '', contact : '', address: ''
     });
     setImage(null);
     fetchProducts();
@@ -100,8 +100,8 @@ function WholesalerDashboard() {
         <input name="price" value={formData.price} onChange={handleChange} placeholder="Price" />
         <input name="minOrderQty" value={formData.minOrderQty} onChange={handleChange} placeholder="Minimum Order Quantity" />
         <input name="brand" value={formData.brand} onChange={handleChange} placeholder="Brand (optional)" />
-        <input name="SKU" value={formData.SKU} onChange={handleChange} placeholder="SKU (optional)" />
-        <input name="expiryDate" type="date" value={formData.expiryDate} onChange={handleChange} />
+        <input name="contact" value={formData.contact } onChange={handleChange} placeholder="contact" />
+        <input name="address"  value={formData.address } onChange={handleChange} placeholder="address"  />
         <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files[0])} />
 
         <button onClick={handleAddOrUpdate}>
@@ -123,8 +123,8 @@ function WholesalerDashboard() {
               <p><strong>Price:</strong> ₹{p.price}</p>
               <p><strong>Min Order:</strong> {p.minOrderQty}</p>
               {p.brand && <p><strong>Brand:</strong> {p.brand}</p>}
-              {p.SKU && <p><strong>SKU:</strong> {p.SKU}</p>}
-              {p.expiryDate && <p><strong>Expiry:</strong> {p.expiryDate}</p>}
+              {p.contact && <p><strong>Contact:</strong> {p.contact}</p>}
+              {p.address && <p><strong>Address:</strong> {p.address}</p>}
               <div className="action-buttons">
                 <button onClick={() => handleEdit(p)}>Edit</button>
                 <button onClick={() => handleDelete(p.id)}>Delete</button>

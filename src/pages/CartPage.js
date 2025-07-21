@@ -82,7 +82,7 @@ function CartPage() {
             <p>Subtotal: ₹{subtotal.toFixed(2)}</p>
             <p>Tax (18%): ₹{tax.toFixed(2)}</p>
             <h3>Total: ₹{total.toFixed(2)}</h3>
-            <button className="pay-now" onClick={handlePayNow}>Pay Now</button>
+            {/* <button className="pay-now" onClick={handlePayNow}>Pay Now</button> */}
           </div>
         </>
       )}

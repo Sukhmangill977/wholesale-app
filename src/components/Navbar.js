@@ -46,7 +46,7 @@ function Navbar() {
   </>
 )}
 
-        {role === 'wholesaler' && <Link to="/orders">Orders</Link>}
+        {/* {role === 'wholesaler' && <Link to="/orders">Orders</Link>} */}
         {user && <button onClick={async () => { await signOut(auth); navigate('/login'); }} className="logout-btn">Logout</button>}
       </nav>
     </header>

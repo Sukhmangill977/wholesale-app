@@ -34,8 +34,8 @@ function ProductDetail() {
         <p><strong>Price:</strong> ₹{product.price}</p>
         <p><strong>Min Order:</strong> {product.minOrderQty}</p>
         {product.brand && <p><strong>Brand:</strong> {product.brand}</p>}
-        {product.SKU && <p><strong>SKU:</strong> {product.SKU}</p>}
-        {product.expiryDate && <p><strong>Expiry:</strong> {product.expiryDate}</p>}
+        {product.contact && <p><strong>Contact:</strong> {product.contact}</p>}
+        {product.address && <p><strong>Address:</strong> {product.address}</p>}
       </div>
     </div>
   );
