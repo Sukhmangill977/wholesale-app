@@ -4,27 +4,19 @@ import {
   collection, addDoc, query, where,
   getDocs, doc, deleteDoc, updateDoc
 } from 'firebase/firestore';
+import { motion } from 'framer-motion';
 import './WholesalerDashboard.css';
 
 function WholesalerDashboard() {
   const [products, setProducts] = useState([]);
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    weight: '',
-    dimensions: '',
-    type: '',
-    quantityAvailable: '',
-    unit: '',
-    price: '',
-    minOrderQty: '',
-    brand: '',
-    contact : '',
-    address: ''
+    name: '', description: '', weight: '', dimensions: '',
+    type: '', quantityAvailable: '', unit: '', price: '',
+    minOrderQty: '', brand: '', contact: '', address: ''
   });
   const [image, setImage] = useState(null);
   const [editId, setEditId] = useState(null);
-const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const fetchProducts = async () => {
     const q = query(collection(db, 'products'), where('createdBy', '==', auth.currentUser.uid));
@@ -67,7 +59,7 @@ const [searchQuery, setSearchQuery] = useState('');
     setFormData({
       name: '', description: '', weight: '', dimensions: '',
       type: '', quantityAvailable: '', unit: '', price: '',
-      minOrderQty: '', brand: '', contact : '', address: ''
+      minOrderQty: '', brand: '', contact: '', address: ''
     });
     setImage(null);
     fetchProducts();
@@ -89,8 +81,9 @@ const [searchQuery, setSearchQuery] = useState('');
 
   return (
     <div className="dashboard-container">
-      <h2>Wholesaler Dashboard</h2>
-      <div className="form-container">
+      <motion.h2 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>Wholesaler Dashboard</motion.h2>
+
+      <motion.div className="form-container" initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.2 }}>
         <input name="name" value={formData.name} onChange={handleChange} placeholder="Product Name" />
         <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Description" />
         <input name="weight" value={formData.weight} onChange={handleChange} placeholder="Weight (e.g. 5kg)" />
@@ -101,53 +94,53 @@ const [searchQuery, setSearchQuery] = useState('');
         <input name="price" value={formData.price} onChange={handleChange} placeholder="Price" />
         <input name="minOrderQty" value={formData.minOrderQty} onChange={handleChange} placeholder="Minimum Order Quantity" />
         <input name="brand" value={formData.brand} onChange={handleChange} placeholder="Brand (optional)" />
-        <input name="contact" value={formData.contact } onChange={handleChange} placeholder="contact" />
-        <input name="address"  value={formData.address } onChange={handleChange} placeholder="address"  />
+        <input name="contact" value={formData.contact} onChange={handleChange} placeholder="Contact" />
+        <input name="address" value={formData.address} onChange={handleChange} placeholder="Address" />
         <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files[0])} />
 
         <button onClick={handleAddOrUpdate}>
           {editId ? 'Update Product' : 'Add Product'}
         </button>
+      </motion.div>
+
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Search by product name, type, brand..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
+        />
       </div>
-<div className="search-bar">
-  <input
-    type="text"
-    placeholder="Search by product name, type, brand..."
-    value={searchQuery}
-    onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
-  />
-</div>
 
       <div className="product-list">
         {products
-  .filter((p) =>
-    p.name?.toLowerCase().includes(searchQuery) ||
-    p.type?.toLowerCase().includes(searchQuery) ||
-    p.brand?.toLowerCase().includes(searchQuery)
-  )
-  .map((p) => (
-      
-          <div className="product-card" key={p.id}>
-            {p.imageBase64 && <img src={p.imageBase64} alt={p.name} />}
-            <div className="product-info">
-              <h3>{p.name}</h3>
-              <p>{p.description}</p>
-              <p><strong>Weight:</strong> {p.weight}</p>
-              <p><strong>Dimensions:</strong> {p.dimensions}</p>
-              <p><strong>Type:</strong> {p.type}</p>
-              <p><strong>Stock:</strong> {p.quantityAvailable} {p.unit}</p>
-              <p><strong>Price:</strong> ₹{p.price}</p>
-              <p><strong>Min Order:</strong> {p.minOrderQty}</p>
-              {p.brand && <p><strong>Brand:</strong> {p.brand}</p>}
-              {p.contact && <p><strong>Contact:</strong> {p.contact}</p>}
-              {p.address && <p><strong>Address:</strong> {p.address}</p>}
-              <div className="action-buttons">
-                <button onClick={() => handleEdit(p)}>Edit</button>
-                <button onClick={() => handleDelete(p.id)}>Delete</button>
+          .filter((p) =>
+            p.name?.toLowerCase().includes(searchQuery) ||
+            p.type?.toLowerCase().includes(searchQuery) ||
+            p.brand?.toLowerCase().includes(searchQuery)
+          )
+          .map((p) => (
+            <motion.div className="product-card" key={p.id} initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.3 }}>
+              {p.imageBase64 && <img src={p.imageBase64} alt={p.name} />}
+              <div className="product-info">
+                <h3>{p.name}</h3>
+                <p>{p.description}</p>
+                <p><strong>Weight:</strong> {p.weight}</p>
+                <p><strong>Dimensions:</strong> {p.dimensions}</p>
+                <p><strong>Type:</strong> {p.type}</p>
+                <p><strong>Stock:</strong> {p.quantityAvailable} {p.unit}</p>
+                <p><strong>Price:</strong> ₹{p.price}</p>
+                <p><strong>Min Order:</strong> {p.minOrderQty}</p>
+                {p.brand && <p><strong>Brand:</strong> {p.brand}</p>}
+                {p.contact && <p><strong>Contact:</strong> {p.contact}</p>}
+                {p.address && <p><strong>Address:</strong> {p.address}</p>}
+                <div className="action-buttons">
+                  <button onClick={() => handleEdit(p)}>Edit</button>
+                  <button onClick={() => handleDelete(p.id)}>Delete</button>
+                </div>
               </div>
-            </div>
-          </div>
-        ))}
+            </motion.div>
+          ))}
       </div>
     </div>
   );
