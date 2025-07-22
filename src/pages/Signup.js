@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { auth, db } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import './signup.css';
+import signupIllustration from '../assets/signup-illustration.svg'; // Add a relevant SVG
 
 function Signup() {
   const [email, setEmail] = useState('');
@@ -22,12 +24,7 @@ function Signup() {
 
     try {
       const userCred = await createUserWithEmailAndPassword(auth, email, password);
-
-      await setDoc(doc(db, 'users', userCred.user.uid), {
-        email,
-        role,
-      });
-
+      await setDoc(doc(db, 'users', userCred.user.uid), { email, role });
       navigate('/login');
     } catch (err) {
       setError(err.message);
@@ -36,35 +33,51 @@ function Signup() {
 
   return (
     <div className="signup-container">
-      <form onSubmit={handleSignup} className="signup-form">
-        <h2>Create an Account</h2>
+      <motion.div
+        className="signup-card"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="signup-left">
+          <img src={signupIllustration} alt="Signup Illustration" />
+        </div>
 
-        {error && <p className="error">{error}</p>}
+        <form onSubmit={handleSignup} className="signup-form">
+          <h2>Join the Community 🌟</h2>
+          <p className="subheading">Create an account to get started</p>
 
-        <input
-          type="email"
-          placeholder="Email Address"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+          {error && <p className="error-msg">{error}</p>}
 
-        <input
-          type="password"
-          placeholder="Password (min 6 characters)"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          minLength={6}
-          required
-        />
+          <input
+            type="email"
+            placeholder="📧 Email Address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-        <select value={role} onChange={(e) => setRole(e.target.value)}>
-          <option value="wholesaler">Wholesaler</option>
-          <option value="retailer">Retailer</option>
-        </select>
+          <input
+            type="password"
+            placeholder="🔒 Password (min 6 characters)"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            minLength={6}
+            required
+          />
 
-        <button type="submit">Sign Up</button>
-      </form>
+          <select value={role} onChange={(e) => setRole(e.target.value)}>
+            <option value="wholesaler">Wholesaler</option>
+            <option value="retailer">Retailer</option>
+          </select>
+
+          <button type="submit">Sign Up</button>
+
+          <p className="login-prompt">
+            Already have an account? <Link to="/login">Login</Link>
+          </p>
+        </form>
+      </motion.div>
     </div>
   );
 }

@@ -1,9 +1,12 @@
+// src/pages/Login.js
 import { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '../firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import './login.css';
+import loginIllustration from '../assets/login-illustration.svg'; // Add this SVG to your project
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -44,29 +47,49 @@ function Login() {
 
   return (
     <div className="login-container">
-      <form onSubmit={handleLogin} className="login-form">
-        <h2>Login</h2>
+      <motion.div
+        className="login-card"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="login-left">
+          <img src={loginIllustration} alt="Login Illustration" />
+        </div>
 
-        {error && <p className="error-msg">{error}</p>}
+        <form onSubmit={handleLogin} className="login-form">
+          <h2>Welcome Back 👋</h2>
+          <p className="subheading">Please login to your account</p>
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+          {error && <p className="error-msg">{error}</p>}
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+          <input
+            type="email"
+            placeholder="📧 Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-        <button type="submit">Login</button>
-      </form>
+          <input
+            type="password"
+            placeholder="🔒 Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+
+          <div className="form-footer">
+            <Link to="/forgot-password" className="forgot-link">Forgot Password?</Link>
+          </div>
+
+          <button type="submit">Login</button>
+
+          <p className="signup-prompt">
+            Don't have an account? <Link to="/Signup">Sign up</Link>
+          </p>
+        </form>
+      </motion.div>
     </div>
   );
 }

@@ -3,53 +3,115 @@
   justify-content: center;
   align-items: center;
   min-height: 90vh;
-  background: #f1f1f1;
+  background: linear-gradient(to right, #f7f8fa, #e2f3e4);
+  padding: 1rem;
+}
+
+.signup-card {
+  display: flex;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  width: 100%;
+  overflow: hidden;
+  flex-direction: row;
+}
+
+.signup-left {
+  flex: 1;
+  background-color: #e0f7ec;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.signup-left img {
+  max-width: 100%;
+  height: auto;
 }
 
 .signup-form {
-  background: #ffffff;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
-  width: 320px;
-  text-align: center;
+  flex: 1;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .signup-form h2 {
-  margin-bottom: 20px;
-  color: #333;
-  font-weight: 600;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #00704a;
+}
+
+.subheading {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 1.5rem;
 }
 
 .signup-form input,
 .signup-form select {
   width: 100%;
-  padding: 10px;
-  margin: 12px 0;
+  padding: 12px;
+  margin-bottom: 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 1rem;
 }
 
 .signup-form button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 8px;
   background-color: #00704a;
   color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .signup-form button:hover {
-  background-color: #005938;
+  background-color: #004d31;
 }
 
-.error {
+.error-msg {
   color: red;
   font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.login-prompt {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.login-prompt a {
+  color: #00704a;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-prompt a:hover {
+  text-decoration: underline;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .signup-card {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .signup-left {
+    display: none;
+  }
+
+  .signup-form {
+    padding: 2rem;
+    width: 100%;
+  }
 }
