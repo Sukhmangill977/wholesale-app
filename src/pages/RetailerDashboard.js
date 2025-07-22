@@ -1,4 +1,3 @@
-// src/pages/RetailerDashboard.js
 import { useEffect, useState } from 'react';
 import { db } from '../firebase';
 import { collection, getDocs } from 'firebase/firestore';
@@ -7,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 function RetailerDashboard() {
   const [products, setProducts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
   const fetchProducts = async () => {
@@ -30,20 +30,38 @@ function RetailerDashboard() {
     alert("Added to cart!");
   };
 
+  // Filter products by search query
+  const filteredProducts = products.filter(p =>
+    p.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="dashboard-container">
       <h2 className="dashboard-heading">🛒 Retailer Dashboard</h2>
+
+      <input
+        type="text"
+        className="search-bar"
+        placeholder="Search products..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
+
       <div className="product-grid">
-        {products.map((p) => (
-          <div className="product-card" key={p.id}>
-            {p.imageBase64 && <img className="product-image" src={p.imageBase64} alt={p.name} />}
-            <div className="product-info">
-              <h3>{p.name}</h3>
-              <button onClick={() => navigate(`/product/${p.id}`)}>View Details</button>
-              <button onClick={() => handleAddToCart(p)}>Add to Cart</button>
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((p) => (
+            <div className="product-card" key={p.id}>
+              {p.imageBase64 && <img className="product-image" src={p.imageBase64} alt={p.name} />}
+              <div className="product-info">
+                <h3>{p.name}</h3>
+                <button onClick={() => navigate(`/product/${p.id}`)}>View Details</button>
+                <button onClick={() => handleAddToCart(p)}>Add to Cart</button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p style={{ gridColumn: '1 / -1', textAlign: 'center', color: '#888' }}>No products found.</p>
+        )}
       </div>
     </div>
   );

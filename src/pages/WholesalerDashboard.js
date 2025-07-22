@@ -24,6 +24,7 @@ function WholesalerDashboard() {
   });
   const [image, setImage] = useState(null);
   const [editId, setEditId] = useState(null);
+const [searchQuery, setSearchQuery] = useState('');
 
   const fetchProducts = async () => {
     const q = query(collection(db, 'products'), where('createdBy', '==', auth.currentUser.uid));
@@ -108,9 +109,24 @@ function WholesalerDashboard() {
           {editId ? 'Update Product' : 'Add Product'}
         </button>
       </div>
+<div className="search-bar">
+  <input
+    type="text"
+    placeholder="Search by product name, type, brand..."
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
+  />
+</div>
 
       <div className="product-list">
-        {products.map((p) => (
+        {products
+  .filter((p) =>
+    p.name?.toLowerCase().includes(searchQuery) ||
+    p.type?.toLowerCase().includes(searchQuery) ||
+    p.brand?.toLowerCase().includes(searchQuery)
+  )
+  .map((p) => (
+      
           <div className="product-card" key={p.id}>
             {p.imageBase64 && <img src={p.imageBase64} alt={p.name} />}
             <div className="product-info">
