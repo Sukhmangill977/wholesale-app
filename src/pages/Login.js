@@ -79,9 +79,9 @@ function Login() {
             required
           />
 
-          <div className="form-footer">
+          {/* <div className="form-footer">
             <Link to="/forgot-password" className="forgot-link">Forgot Password?</Link>
-          </div>
+          </div> */}
 
           <button type="submit">Login</button>
 

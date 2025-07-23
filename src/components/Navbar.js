@@ -9,6 +9,7 @@ import './navbar.css';
 function Navbar() {
   const [user, setUser] = useState(null);
   const [role, setRole] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,12 +25,30 @@ function Navbar() {
     return () => unsubscribe();
   }, []);
 
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    navigate('/login');
+  };
+
   return (
     <header className="navbar">
       <div className="navbar-logo">
         <Link to="/">🛍️ Wholesale Marketplace</Link>
       </div>
-      <nav className="navbar-links">
+
+      {/* Hamburger icon */}
+      <div className="hamburger" onClick={toggleMenu}>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      {/* Menu links */}
+      <nav className={`navbar-links ${menuOpen ? 'active' : ''}`}>
         <Link to="/">Home</Link>
         {!user && <>
           <Link to="/signup">Sign Up</Link>
@@ -39,15 +58,12 @@ function Navbar() {
           <Link to="/cart">Cart</Link>
           <Link to="/retailer">Products</Link>
         </>}
-        {role === 'wholesaler' && (
-  <>
-    
-    <Link to="/wholesaler">My Products</Link> {/* ✅ NEW LINK */}
-  </>
-)}
-
-        {/* {role === 'wholesaler' && <Link to="/orders">Orders</Link>} */}
-        {user && <button onClick={async () => { await signOut(auth); navigate('/login'); }} className="logout-btn">Logout</button>}
+        {role === 'wholesaler' && <>
+          <Link to="/wholesaler">My Products</Link>
+        </>}
+        {user && (
+          <button onClick={handleLogout} className="logout-btn">Logout</button>
+        )}
       </nav>
     </header>
   );
